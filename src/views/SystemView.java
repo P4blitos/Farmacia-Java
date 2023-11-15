@@ -481,6 +481,7 @@ public class SystemView extends javax.swing.JFrame {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 500, 60));
 
         Btn_photo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Iconos/man.png"))); // NOI18N
+        Btn_photo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Btn_photo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_photoActionPerformed(evt);
@@ -504,6 +505,8 @@ public class SystemView extends javax.swing.JFrame {
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 100));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 100));
+
+        jTabbedPane1.setBackground(new java.awt.Color(251, 248, 233));
 
         jPanel3.setBackground(new java.awt.Color(152, 243, 229));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1586,7 +1589,7 @@ public class SystemView extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(table_all_purchases);
 
-        jPanel11.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 920, 190));
+        jPanel11.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 920, 170));
 
         jLabel62.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel62.setText("VENTAS REALIZADAS");
@@ -1617,6 +1620,7 @@ public class SystemView extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(152, 243, 229));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel18.setBackground(new java.awt.Color(251, 248, 233));
         jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Editar Perfil", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)))); // NOI18N
 
         jLabel45.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
