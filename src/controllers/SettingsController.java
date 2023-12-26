@@ -19,6 +19,7 @@ public class SettingsController implements MouseListener{
         this.views.jLabelReports.addMouseListener(this);
         this.views.jLabelSettings.addMouseListener(this);
         this.views.jLabelSales.addMouseListener(this);
+        
     }
     
     @Override
