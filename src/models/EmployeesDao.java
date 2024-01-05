@@ -124,4 +124,60 @@ public class EmployeesDao {
         }
         return list_employees;
     }
+    
+    //modificar empleado
+    public boolean updateEmployeeQuery(Employees employee){
+        String Query= "UPDATE employees SET full_name = ?, username= ?, address= ?, telephone= ?, email= ?, rol= ?, updated= ? "
+                +" WHERE id= ?";
+                
+        Timestamp datetime= new Timestamp(new Date().getTime());
+        try{
+            conn=cn.getConnection();
+            pst= conn.prepareStatement(Query);
+            pst.setString(1,employee.getFull_name());
+            pst.setString(2, employee.getUsername());
+            pst.setString(3, employee.getAddress());
+            pst.setString(4, employee.getTelephone());
+            pst.setString(5, employee.getEmail());
+            pst.setString(6, employee.getRol());
+            pst.setTimestamp(7, datetime);
+            pst.setInt(8, employee.getId());
+            pst.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Error al modificar los datos del empleado "+ e);
+            return false;
+        }
+    }
+    
+    //eliminar empleado
+    public boolean deleteEmployeeQuery(int id){
+        String Query="DELETE FROM employees WHERE id= "+ id;
+        try{
+            conn=cn.getConnection();
+            pst= conn.prepareStatement(Query);
+            pst.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"No puede eliminar un empleado que tenga relacion con otra tabla: ");
+            return false;
+        }
+    }
+    
+    //cambiar contraseña
+    
+    public boolean updateEmployeePassword(Employees employee){
+        String Query= "UPDATE employees SET password= ? WHERE username= '"+ username_user +"'";
+        
+        try{
+            conn=cn.getConnection();
+            pst= conn.prepareStatement(Query);
+            pst.setString(1, employee.getPassword());
+            pst.executeUpdate();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"A ocurrido un error al modificar la contraseña "+ e);
+            return false;
+        }
+    }
 }
