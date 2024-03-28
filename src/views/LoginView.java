@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package views;
+
+import controllers.LoginController;
+import models.Employees;
+import models.EmployeesDao;
 
 /**
  *
@@ -11,11 +10,12 @@ package views;
  */
 public class LoginView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginView
-     */
+    Employees employee = new Employees();
+    EmployeesDao employee_dao = new EmployeesDao();
     public LoginView() {
         initComponents();
+        //controlador del login
+        LoginController employee_login = new LoginController(employee,employee_dao, this);
         rsscalelabel.RSScaleLabel.setScaleLabel(Wallpaper,"src/images/Iconos/Luigi_doctor.jpg");
         setSize(930,415);
         setResizable(false);

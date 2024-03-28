@@ -493,6 +493,11 @@ public class SystemView extends javax.swing.JFrame {
         btn_logout.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btn_logout.setText("Salir");
         btn_logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_logoutActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(879, 25, 70, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 100));
@@ -1778,6 +1783,14 @@ public class SystemView extends javax.swing.JFrame {
     private void btn_register_productActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_register_productActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_register_productActionPerformed
+
+    private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
+        if(evt.getSource()== btn_logout){
+            dispose();
+            LoginView login= new LoginView();
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_btn_logoutActionPerformed
 
     /**
      * @param args the command line arguments
