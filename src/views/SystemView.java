@@ -1,14 +1,18 @@
 
 package views;
 
+import controllers.EmployeesController;
 import controllers.SettingsController;
+import models.Employees;
+import models.EmployeesDao;
 
 
 public class SystemView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SystemView
-     */
+    //Empleados
+    Employees employee = new Employees();
+    EmployeesDao employee_dao = new EmployeesDao();
+    
     public SystemView() {
         initComponents();
         setSize(1208,680);
@@ -18,6 +22,8 @@ public class SystemView extends javax.swing.JFrame {
         //controlador de settings
         SettingsController setting = new SettingsController(this);
         this.repaint();
+        //Controlador de empleados
+        EmployeesController employee_account = new EmployeesController(employee, employee_dao, this);
     }
 
     /**

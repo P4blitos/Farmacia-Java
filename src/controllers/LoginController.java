@@ -43,12 +43,13 @@ public class LoginController implements ActionListener{
                     }
                     this.login_view.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null,"Usuario o contraseña incorresta");
+                    JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecta");
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"Los campos estan vacios");
             }
         }
     }
+    
     
 }
