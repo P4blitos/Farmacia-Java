@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Employees;
 import models.EmployeesDao;
+import static models.EmployeesDao.id_user;
 import static models.EmployeesDao.rol_user;
 import views.SystemView;
 
@@ -31,6 +32,13 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
         this.views = views;
         //Boton registar empleado
         this.views.btn_register_employee.addActionListener(this);
+        //boton de modificar empleado
+        this.views.btn_update_employee.addActionListener(this);
+        //boton de eliminar empleado.
+        this.views.btn_delete_employee.addActionListener(this);
+        //Boton de cancelar
+        this.views.btn_cancel_employee.addActionListener(this);
+        
         this.views.employees_table.addMouseListener(this);
         this.views.txt_search_employee.addKeyListener(this);
     }
@@ -61,11 +69,74 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
                 
                 if(employeeDao.registerEmployeeQuery(employee)){
                     cleanTable();
+                    cleanFields();
+                    listAllEmployees();
                     JOptionPane.showMessageDialog(null,"Empleado registrado con exito");
                 }else{
                     JOptionPane.showMessageDialog(null,"Ha ocurrido un error al registrar un empleado");
                 }
             }
+        }else if(e.getSource()== views.btn_update_employee){
+            //verificar que una persona a seleccionado una fila.
+            //si esta vacio entonces
+            if(views.txt_employee_id.equals("")){
+                JOptionPane.showMessageDialog(null,"Selecciona una fila para continuar");
+            }else{
+                //verificar si los campos estan vacios
+                if(views.txt_employee_id.getText().equals("")
+                   || views.txt_employee_fullname.getText().equals("")
+                   || views.cmb_rol.getSelectedItem().toString().equals("")){
+                    
+                   JOptionPane.showMessageDialog(null,"Todos los campos son obligatorios"); 
+                
+                }else{
+                   employee.setId(Integer.parseInt(views.txt_employee_id.getText().trim()));
+                   employee.setFull_name(views.txt_employee_fullname.getText().trim());
+                   employee.setUsername(views.txt_employee_username.getText().trim());
+                   employee.setAddress(views.txt_employee_address.getText().trim());
+                   employee.setTelephone(views.txt_employee_telephone.getText().trim());
+                   employee.setEmail(views.txt_employee_email.getText().trim());
+                   employee.setPassword(String.valueOf(views.txt_employee_password.getPassword()));
+                   employee.setRol(views.cmb_rol.getSelectedItem().toString());
+                   
+                   if(employeeDao.updateEmployeeQuery(employee)){
+                       cleanTable();
+                       cleanFields();
+                       listAllEmployees();
+                       views.btn_register_employee.setEnabled(true);
+                       JOptionPane.showMessageDialog(null,"Empleado se ha actualizado con exito");
+                   }else{
+                       JOptionPane.showMessageDialog(null,"Ha ocurrido un error al modificar un empleado");
+                   }
+                }
+            }
+        }else if(e.getSource()== views.btn_delete_employee){
+            //la fila seleccionada por el usuario
+            int row= views.employees_table.getSelectedRow();
+            //Si el usuario no selecciona ninguna fila, los valores seran -1
+            if(row == -1){
+                JOptionPane.showMessageDialog(null,"Debes seleccionar un empleado para eliminar");
+                //Asegurarnos de que no se elimino asi mismo
+            }else if(views.employees_table.getValueAt(row, 0).equals(id_user)){
+                JOptionPane.showMessageDialog(null,"No puedes elimnar al usuario en uso");
+            }else{
+                int id= Integer.parseInt(views.employees_table.getValueAt(row, 0).toString());
+                int question= JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el empleado?");
+                
+                if(question == 0 && employeeDao.deleteEmployeeQuery(id)!= false){
+                    cleanFields();
+                    cleanTable();
+                    views.btn_register_employee.setEnabled(true);
+                    views.txt_employee_password.setEnabled(true);
+                    listAllEmployees();
+                    JOptionPane.showMessageDialog(null, "Empleado eliminado con exito");
+                }
+            }
+        }else if(e.getSource()== views.btn_cancel_employee){
+            cleanFields();
+            views.btn_register_employee.setEnabled(true);
+            views.txt_employee_password.setEnabled(true);
+            views.txt_employee_id.setEnabled(true);
         }
     }
     
@@ -148,6 +219,18 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
            cleanTable();
            listAllEmployees();
        }
+    }
+    //limpiar campos
+    public void cleanFields(){
+        views.txt_employee_id.setText("");
+        views.txt_employee_id.setEditable(true);
+        views.txt_employee_fullname.setText("");
+        views.txt_employee_username.setText("");
+        views.txt_employee_address.setText("");
+        views.txt_employee_telephone.setText("");
+        views.txt_employee_email.setText("");
+        views.txt_employee_password.setText("");
+        views.cmb_rol.setSelectedIndex(0);
     }
     
     public void cleanTable(){
