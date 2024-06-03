@@ -38,7 +38,10 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
         this.views.btn_delete_employee.addActionListener(this);
         //Boton de cancelar
         this.views.btn_cancel_employee.addActionListener(this);
-        
+        //Boton de cambiar contraseña
+        this.views.btn_modify_data.addActionListener(this);
+        //colocar label en escucha
+        this.views.jLabelEmployees.addMouseListener(this);
         this.views.employees_table.addMouseListener(this);
         this.views.txt_search_employee.addKeyListener(this);
     }
@@ -137,6 +140,28 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
             views.btn_register_employee.setEnabled(true);
             views.txt_employee_password.setEnabled(true);
             views.txt_employee_id.setEnabled(true);
+        }else if(e.getSource()== views.btn_modify_data){
+            //recolectar informacion de las cajas password
+            String password = String.valueOf(views.txt_password_modify.getPassword());
+            String confirm_password = String.valueOf(views.txt_password_modify_confirm.getPassword());
+            
+            //verificar que las contraseñas no esten vacias
+            if(!password.equals("") && !confirm_password.equals("")){
+                //verificar que sean iguales
+                if(password.equals(confirm_password)){
+                    employee.setPassword(String.valueOf(views.txt_password_modify.getPassword()));
+                    
+                    if(employeeDao.updateEmployeePassword(employee) != false){
+                        JOptionPane.showMessageDialog(null, "Contraseña del empleado modificada con exito");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar la contraseña");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+            }
         }
     }
     
@@ -180,6 +205,21 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
             views.txt_employee_id.setEditable(false);
             views.txt_employee_password.setEnabled(false);
             views.btn_register_employee.setEnabled(false);
+        }else if(e.getSource() == views.jLabelEmployees){
+            if(rol.equals("Administrador")){
+                views.jTabbedPane1.setSelectedIndex(4);
+                //limpiar tabla
+                cleanTable();
+                //limpiar campos
+                cleanFields();
+                
+                //Listar empleados
+                listAllEmployees();
+            }else{
+                views.jTabbedPane1.setEnabledAt(4, false);
+                views.jLabelEmployees.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "No tienes privilegios de administrador");
+            }
         }
     }
 

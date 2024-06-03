@@ -1,10 +1,15 @@
 
 package views;
 
+import controllers.CustomersController;
 import controllers.EmployeesController;
 import controllers.SettingsController;
+import models.Customers;
+import models.CustomersDao;
 import models.Employees;
 import models.EmployeesDao;
+import static models.EmployeesDao.full_name_user;
+import static models.EmployeesDao.rol_user;
 
 
 public class SystemView extends javax.swing.JFrame {
@@ -12,12 +17,15 @@ public class SystemView extends javax.swing.JFrame {
     //Empleados
     Employees employee = new Employees();
     EmployeesDao employee_dao = new EmployeesDao();
+    //Clientes
+    Customers customer = new Customers();
+    CustomersDao customer_dao = new CustomersDao();
     
     public SystemView() {
         initComponents();
         setSize(1208,680);
         setResizable(false);
-        setTitle("Panel de administracion");
+        titleInterface();
         setLocationRelativeTo(null);
         //controlador de settings
         SettingsController setting = new SettingsController(this);
@@ -26,6 +34,16 @@ public class SystemView extends javax.swing.JFrame {
         EmployeesController employee_account = new EmployeesController(employee, employee_dao, this);
         employee_account.listAllEmployees();
         
+        //Controlador de clientes
+        CustomersController customer_account = new CustomersController(customer,customer_dao, this);
+        
+    }
+    
+    public String titleInterface(){
+        setTitle("Panel "+ rol_user);
+        label_name_employee.setText(full_name_user);
+        label_name_rol.setText(rol_user);
+        return rol_user.trim();
     }
 
     /**
@@ -60,6 +78,8 @@ public class SystemView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Btn_photo = new javax.swing.JButton();
         btn_logout = new javax.swing.JButton();
+        label_name_employee = new javax.swing.JLabel();
+        label_name_rol = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -507,6 +527,14 @@ public class SystemView extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(879, 25, 70, 40));
+
+        label_name_employee.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_name_employee.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(label_name_employee, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, 120, 10));
+
+        label_name_rol.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_name_rol.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(label_name_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 110, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1010, 100));
 
@@ -1983,6 +2011,8 @@ public class SystemView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     public javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JLabel label_name_employee;
+    public javax.swing.JLabel label_name_rol;
     public javax.swing.JTable products_table;
     public javax.swing.JTable purchases_table;
     public javax.swing.JTable sales_table;
